@@ -19,19 +19,32 @@ import ReactDOM from 'react-dom';
 // ReactDOM.render(H1,document.getElementById('root'))
 
 
-// JSX列表循环渲染
-const songs = [
-    {id:1,name:"痴心绝对"},
-    {id:2,name:"南山南"},
-    {id:3,name:"工资呀"},
-    {id:4,name:"加油,武汉"},
-    {id:5,name:"红日"},
-]
-const list = (
-    <ul>
-    {songs.map(item=>(
-    <li key={item.id}>{item.name}</li>
-    ))}
-</ul>
-)
-ReactDOM.render(list,document.getElementById('root'))
+// // JSX列表循环渲染
+// const songs = [
+//     {id:1,name:"痴心绝对"},
+//     {id:2,name:"南山南"},
+//     {id:3,name:"工资呀"},
+//     {id:4,name:"加油,武汉"},
+//     {id:5,name:"红日"},
+// ]
+// const list = (
+//     <ul>
+//     {songs.map(item=>(
+//     <li key={item.id}>{item.name}</li>
+//     ))}
+// </ul>
+// )
+// ReactDOM.render(list,document.getElementById('root'))
+
+
+// JSX条件渲染
+const isLoading = false
+const fn = function(){
+    if(isLoading){
+        return <span>这是一个条件为真渲染语句</span>
+    }else{
+        return <span>这是一个条件为假的</span>
+    }
+}
+const v1 = <div>{fn()}</div>
+ReactDOM.render(v1,document.getElementById('root'))
