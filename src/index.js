@@ -50,8 +50,20 @@ import ReactDOM from 'react-dom';
 // ReactDOM.render(v1,document.getElementById('root'))
 
 
-// 函数组件
-function Hello(){
-    return <h1>这是一个函数组件</h1>
+// // 函数组件
+// function Hello(){
+//     return <h1>这是一个函数组件</h1>
+// }
+// ReactDOM.render(<Hello />,document.getElementById('root'))
+
+// 类组件
+//  注意:1.类名称必须以大写字母开头Hello
+//         2.类组件应该继承React.Component父类,从而可以使用父类中提供的方法或属性
+//         3.类组件必须提供render()方法
+//         4.render()方法必须有返回值,表示该组件的结构
+class Hello extends React.Component{
+    render(){
+        return <h1>这是一个类组件</h1>
+    }
 }
 ReactDOM.render(<Hello />,document.getElementById('root'))
