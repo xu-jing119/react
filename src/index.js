@@ -37,14 +37,21 @@ import ReactDOM from 'react-dom';
 // ReactDOM.render(list,document.getElementById('root'))
 
 
-// JSX条件渲染
-const isLoading = false
-const fn = function(){
-    if(isLoading){
-        return <span>这是一个条件为真渲染语句</span>
-    }else{
-        return <span>这是一个条件为假的</span>
-    }
+// // JSX条件渲染
+// const isLoading = false
+// const fn = function(){
+//     if(isLoading){
+//         return <span>这是一个条件为真渲染语句</span>
+//     }else{
+//         return <span>这是一个条件为假的</span>
+//     }
+// }
+// const v1 = <div>{fn()}</div>
+// ReactDOM.render(v1,document.getElementById('root'))
+
+
+// 函数组件
+function Hello(){
+    return <h1>这是一个函数组件</h1>
 }
-const v1 = <div>{fn()}</div>
-ReactDOM.render(v1,document.getElementById('root'))
+ReactDOM.render(<Hello />,document.getElementById('root'))
