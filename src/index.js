@@ -1,6 +1,7 @@
 // 引入包
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './index.css'
 
 // // 创建元素
 // const title = React.createElement('h1', null, 'hello react 脚手架!')
@@ -61,9 +62,51 @@ import ReactDOM from 'react-dom';
 //         2.类组件应该继承React.Component父类,从而可以使用父类中提供的方法或属性
 //         3.类组件必须提供render()方法
 //         4.render()方法必须有返回值,表示该组件的结构
-class Hello extends React.Component{
-    render(){
-        return <h1>这是一个类组件</h1>
+// class Hello extends React.Component{
+//     render(){
+//         return <h1>这是一个类组件</h1>
+//     }
+// }
+// ReactDOM.render(<Hello />,document.getElementById('root'))
+
+
+// 综合案例 条件渲染 循环渲染 类组件
+const songs = [
+        {id:1,name:"痴心绝对"},
+        {id:2,name:"南山南"},
+        {id:3,name:"工资呀"},
+        {id:4,name:"加油,武汉"},
+        {id:5,name:"红日"},
+    ]
+const isLoading= true
+const fn = function(){
+    if(isLoading){
+        return <td>备注号111</td>
+    }else{
+        return null
     }
 }
-ReactDOM.render(<Hello />,document.getElementById('root'))
+    class Hello extends React.Component{
+        render(){
+            return (
+                <table className="container">
+                <thead>
+                    <tr>
+                        <td>id号</td>
+                        <td>名字</td>
+                        {fn()}
+                    </tr>
+                </thead>
+                <tbody>
+                    {songs.map(item=>(
+                        <tr key={item.id}>
+                            <td>{item.id}</td>
+                            <td>{item.name}</td>
+                        </tr>
+                    ))}
+                </tbody>
+                </table>
+            )
+        }
+    }
+ ReactDOM.render(<Hello />,document.getElementById('root'))
