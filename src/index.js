@@ -112,21 +112,61 @@ import './index.css'
 //  ReactDOM.render(<Hello />,document.getElementById('root'))
 
 
-// 受控组件 实现属性绑定+事件绑定
+// // 受控组件 实现属性绑定+事件绑定
+// class Hello extends React.Component{
+//     state={
+//         txt:'文本框'
+//     }
+//     onIncream=(e)=>{
+//         this.setState({
+//             txt:e.target.value
+//         })
+//     }
+//     render(){
+//         return (<div>
+//             <div>这是一个受控组件:{this.state.txt}</div>
+//             <input type='value' value={this.state.txt} onChange={this.onIncream} />
+//         </div>)
+//     }
+// }
+// ReactDOM.render(<Hello />,document.getElementById('root'))
+
+
+// this指向
 class Hello extends React.Component{
     state={
-        txt:'文本框'
+        count:1
     }
-    onIncream=(e)=>{
+    // 方法1:用箭头函数改变this指向 推荐使用这种 箭头函数没有this指向 会去找父级
+    isClick=()=>{
         this.setState({
-            txt:e.target.value
+            count:this.state.count+1
         })
     }
+
+    // // 方法2 通过构造函数来继承父类放入一些属性和方法 改变this指向
+    // isClick(){
+    //     this.setState({
+    //         count:this.state.count+1
+    //     })
+    // }
+    // constructor(){
+    //     super()
+    //     this.isClick=this.isClick.bind(this)
+    // }
     render(){
-        return (<div>
-            <div>这是一个受控组件:{this.state.txt}</div>
-            <input type='value' value={this.state.txt} onChange={this.onIncream} />
-        </div>)
+        return(
+            <div>
+                <div>点击自增加1:{this.state.count}</div>
+                <button onClick={this.isClick}>点击</button>
+                {/* 方法3 直接在标签里面写箭头函数 缺点:导致jsx文件过长 结构不清晰 不推荐使用
+                <button onClick={()=>{
+                    this.setState({
+                        count:this.state.count+1
+                    })
+                }}>点击</button> */}
+            </div>
+        )
     }
 }
 ReactDOM.render(<Hello />,document.getElementById('root'))
