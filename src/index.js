@@ -70,7 +70,7 @@ import './index.css'
 // ReactDOM.render(<Hello />,document.getElementById('root'))
 
 
-// // 综合案例 条件渲染 循环渲染 类组件
+// // 综合案例1 条件渲染 循环渲染 类组件
 // const songs = [
 //         {id:1,name:"痴心绝对"},
 //         {id:2,name:"南山南"},
@@ -132,41 +132,71 @@ import './index.css'
 // ReactDOM.render(<Hello />,document.getElementById('root'))
 
 
-// this指向
-class Hello extends React.Component{
+// // this指向
+// class Hello extends React.Component{
+//     state={
+//         count:1
+//     }
+//     // 方法1:用箭头函数改变this指向 推荐使用这种 箭头函数没有this指向 会去找父级
+//     isClick=()=>{
+//         this.setState({
+//             count:this.state.count+1
+//         })
+//     }
+
+//     // // 方法2 通过构造函数来继承父类放入一些属性和方法 改变this指向
+//     // isClick(){
+//     //     this.setState({
+//     //         count:this.state.count+1
+//     //     })
+//     // }
+//     // constructor(){
+//     //     super()
+//     //     this.isClick=this.isClick.bind(this)
+//     // }
+//     render(){
+//         return(
+//             <div>
+//                 <div>点击自增加1:{this.state.count}</div>
+//                 <button onClick={this.isClick}>点击</button>
+//                 {/* 方法3 直接在标签里面写箭头函数 缺点:导致jsx文件过长 结构不清晰 不推荐使用
+//                 <button onClick={()=>{
+//                     this.setState({
+//                         count:this.state.count+1
+//                     })
+//                 }}>点击</button> */}
+//             </div>
+//         )
+//     }
+// }
+// ReactDOM.render(<Hello />,document.getElementById('root'))
+
+
+// 综合案例2
+class Addr extends React.Component{
     state={
-        count:1
+        txt:'你',
+        isChecked:true
     }
-    // 方法1:用箭头函数改变this指向 推荐使用这种 箭头函数没有this指向 会去找父级
-    isClick=()=>{
+    isChange=(e)=>{
+        console.log(e.target);
+        console.log(e.target.value);
         this.setState({
-            count:this.state.count+1
+            txt:e.target.value
         })
     }
-
-    // // 方法2 通过构造函数来继承父类放入一些属性和方法 改变this指向
-    // isClick(){
-    //     this.setState({
-    //         count:this.state.count+1
-    //     })
-    // }
-    // constructor(){
-    //     super()
-    //     this.isClick=this.isClick.bind(this)
-    // }
+    isChecked=(e)=>{
+        console.log(e.target.checked);
+        this.setState({
+            isChecked:e.target.checked
+        })
+    }
     render(){
-        return(
-            <div>
-                <div>点击自增加1:{this.state.count}</div>
-                <button onClick={this.isClick}>点击</button>
-                {/* 方法3 直接在标签里面写箭头函数 缺点:导致jsx文件过长 结构不清晰 不推荐使用
-                <button onClick={()=>{
-                    this.setState({
-                        count:this.state.count+1
-                    })
-                }}>点击</button> */}
-            </div>
-        )
+        return(<div>
+            <div>数据视图一起变化:{this.state.txt}</div>
+            <input type='value' value={this.state.txt} onChange={this.isChange}/>
+            <input type="checkbox" value={this.state.isChecked} onChange={this.isChecked}/>
+        </div>)
     }
 }
-ReactDOM.render(<Hello />,document.getElementById('root'))
+ReactDOM.render(<Addr />,document.getElementById('root'))
