@@ -172,7 +172,37 @@ import './index.css'
 // ReactDOM.render(<Hello />,document.getElementById('root'))
 
 
-// 综合案例2
+// // 综合案例2
+// class Addr extends React.Component{
+//     state={
+//         txt:'你',
+//         isChecked:true
+//     }
+//     isChange=(e)=>{
+//         console.log(e.target);
+//         console.log(e.target.value);
+//         this.setState({
+//             txt:e.target.value
+//         })
+//     }
+//     isChecked=(e)=>{
+//         console.log(e.target.checked);
+//         this.setState({
+//             isChecked:e.target.checked
+//         })
+//     }
+//     render(){
+//         return(<div>
+//             <div>数据视图一起变化:{this.state.txt}</div>
+//             <input type='value' value={this.state.txt} onChange={this.isChange}/>
+//             <input type="checkbox" value={this.state.isChecked} onChange={this.isChecked}/>
+//         </div>)
+//     }
+// }
+// ReactDOM.render(<Addr />,document.getElementById('root'))
+
+
+// 案例2优化
 class Addr extends React.Component{
     state={
         txt:'你',
@@ -180,22 +210,16 @@ class Addr extends React.Component{
     }
     isChange=(e)=>{
         console.log(e.target);
-        console.log(e.target.value);
+    const val= e.target.type==='checkbox'? e.target.checked:e.target.value
         this.setState({
-            txt:e.target.value
-        })
-    }
-    isChecked=(e)=>{
-        console.log(e.target.checked);
-        this.setState({
-            isChecked:e.target.checked
+            [e.target.name]:val
         })
     }
     render(){
         return(<div>
             <div>数据视图一起变化:{this.state.txt}</div>
-            <input type='value' value={this.state.txt} onChange={this.isChange}/>
-            <input type="checkbox" value={this.state.isChecked} onChange={this.isChecked}/>
+            <input type='value' value={this.state.txt} name='txt' onChange={this.isChange}/>
+            <input type="checkbox" value={this.state.isChecked} name='isChecked' onChange={this.isChange}/>
         </div>)
     }
 }
