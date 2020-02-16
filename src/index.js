@@ -202,25 +202,47 @@ import './index.css'
 // ReactDOM.render(<Addr />,document.getElementById('root'))
 
 
-// 案例2优化
-class Addr extends React.Component{
-    state={
-        txt:'你',
-        isChecked:true
+// // 案例2优化
+// class Addr extends React.Component{
+//     state={
+//         txt:'你',
+//         isChecked:true
+//     }
+//     isChange=(e)=>{
+//         console.log(e.target);
+//     const val= e.target.type==='checkbox'? e.target.checked:e.target.value
+//         this.setState({
+//             [e.target.name]:val
+//         })
+//     }
+//     render(){
+//         return(<div>
+//             <div>数据视图一起变化:{this.state.txt}</div>
+//             <input type='value' value={this.state.txt} name='txt' onChange={this.isChange}/>
+//             <input type="checkbox" value={this.state.isChecked} name='isChecked' onChange={this.isChange}/>
+//         </div>)
+//     }
+// }
+// ReactDOM.render(<Addr />,document.getElementById('root'))
+
+
+// 非受控组件  用得很少
+class Hello extends React.Component{
+    constructor(){
+        super()
+        this.txtRef=React.createRef()
     }
-    isChange=(e)=>{
-        console.log(e.target);
-    const val= e.target.type==='checkbox'? e.target.checked:e.target.value
-        this.setState({
-            [e.target.name]:val
-        })
+    isClick=()=>{
+        console.log('文本框的值是:',this.txtRef.current.value);
+        
     }
     render(){
-        return(<div>
-            <div>数据视图一起变化:{this.state.txt}</div>
-            <input type='value' value={this.state.txt} name='txt' onChange={this.isChange}/>
-            <input type="checkbox" value={this.state.isChecked} name='isChecked' onChange={this.isChange}/>
-        </div>)
+        return (
+            <div>
+                <input type='text' ref={this.txtRef} />
+                <button onClick={this.isClick}>点击获取文本框的值</button>
+            </div>
+        )
     }
 }
-ReactDOM.render(<Addr />,document.getElementById('root'))
+ReactDOM.render(<Hello />,document.getElementById('root'))
