@@ -1,7 +1,7 @@
 // 引入包
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css'
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
 
 // // 创建元素
 // const title = React.createElement('h1', null, 'hello react 脚手架!')
@@ -18,7 +18,6 @@ import './index.css'
 //     <span>名字是:{name}</span>
 // </div>)
 // ReactDOM.render(H1,document.getElementById('root'))
-
 
 // // JSX列表循环渲染
 // const songs = [
@@ -37,7 +36,6 @@ import './index.css'
 // )
 // ReactDOM.render(list,document.getElementById('root'))
 
-
 // // JSX条件渲染
 // const isLoading = false
 // const fn = function(){
@@ -49,7 +47,6 @@ import './index.css'
 // }
 // const v1 = <div>{fn()}</div>
 // ReactDOM.render(v1,document.getElementById('root'))
-
 
 // // 函数组件
 // function Hello(){
@@ -68,7 +65,6 @@ import './index.css'
 //     }
 // }
 // ReactDOM.render(<Hello />,document.getElementById('root'))
-
 
 // // 综合案例1 条件渲染 循环渲染 类组件
 // const songs = [
@@ -111,7 +107,6 @@ import './index.css'
 //     }
 //  ReactDOM.render(<Hello />,document.getElementById('root'))
 
-
 // // 受控组件 实现属性绑定+事件绑定
 // class Hello extends React.Component{
 //     state={
@@ -130,7 +125,6 @@ import './index.css'
 //     }
 // }
 // ReactDOM.render(<Hello />,document.getElementById('root'))
-
 
 // // this指向
 // class Hello extends React.Component{
@@ -171,7 +165,6 @@ import './index.css'
 // }
 // ReactDOM.render(<Hello />,document.getElementById('root'))
 
-
 // // 综合案例2
 // class Addr extends React.Component{
 //     state={
@@ -201,7 +194,6 @@ import './index.css'
 // }
 // ReactDOM.render(<Addr />,document.getElementById('root'))
 
-
 // // 案例2优化
 // class Addr extends React.Component{
 //     state={
@@ -225,7 +217,6 @@ import './index.css'
 // }
 // ReactDOM.render(<Addr />,document.getElementById('root'))
 
-
 // // 非受控组件  用得很少
 // class Hello extends React.Component{
 //     constructor(){
@@ -234,7 +225,7 @@ import './index.css'
 //     }
 //     isClick=()=>{
 //         console.log('文本框的值是:',this.txtRef.current.value);
-        
+
 //     }
 //     render(){
 //         return (
@@ -246,7 +237,6 @@ import './index.css'
 //     }
 // }
 // ReactDOM.render(<Hello />,document.getElementById('root'))
-
 
 // // 评论案例
 // class App extends React.Component {
@@ -299,7 +289,7 @@ import './index.css'
 //             userName:'',
 //             userContent:''
 //         })
-        
+
 //     }
 //   render() {
 //     return (
@@ -327,35 +317,76 @@ import './index.css'
 // // 渲染组件
 // ReactDOM.render(<App />, document.getElementById('root'))
 
+// // 组件之间相互传值 父向子传值
+// class Parents extends React.Component{
+//     state={
+//         count:0
+//     }
+//     parClick=()=>{
+//         this.setState({
+//             count:this.state.count+1
+//         })
+//     }
+//     render(){
+//         return(
+//             <div className="parents">
+//                 <div>这是父组件的内容:{this.state.count}</div>
+//                 <button onClick={this.parClick}>点击+1</button>
+//                 <Child countChild={this.state.count} />
+//             </div>
+//         )
+//     }
+// }
+// class Child extends React.Component{
+//     render(){
+//         return(
+//             <div className="son">
+//                 <div>这是子组件的内容:{this.props.countChild}</div>
+//             </div>
+//         )
+//     }
+// }
+// ReactDOM.render(<Parents />,document.getElementById('root'))
 
-// 组件之间相互传值
-class Parents extends React.Component{
-    state={
-        count:0
-    }
-    parClick=()=>{
-        this.setState({
-            count:this.state.count+1
-        })
-    }
-    render(){
-        return(
-            <div className="parents">
-                <div>这是父组件的内容:{this.state.count}</div>
-                <button onClick={this.parClick}>点击+1</button>
-                <Child countChild={this.state.count} />
-            </div>
-        )
-    }
-}
-class Child extends React.Component{
-    render(){
-        return(
-            <div className="son">
-                <div>这是子组件的内容:{this.props.countChild}</div>
-            </div>
-        )
-    }
-}
-ReactDOM.render(<Parents />,document.getElementById('root'))
 
+
+// 组件之间相互传值 子向父传值
+class Parents extends React.Component {
+  state = {
+    count: 0
+  };
+  getSonCount = param => {
+    console.log(param);
+    this.setState({
+      count: param
+    });
+  };
+  render() {
+    return (
+      <div className="parents">
+        <div>这是父组件的内容:{this.state.count}</div>
+        <Child myFn={this.getSonCount} />
+      </div>
+    );
+  }
+}
+class Child extends React.Component {
+  state = {
+    sonCount: 0
+  };
+  sonClick = () => {
+      this.setState({
+        sonCount:this.state.sonCount+1
+      })
+    this.props.myFn(this.state.sonCount)
+  };
+  render() {
+    return (
+      <div className="son">
+        <div>这是子组件的内容:{this.state.sonCount}</div>
+        <button onClick={this.sonClick}>儿子点击+1</button>
+      </div>
+    );
+  }
+}
+ReactDOM.render(<Parents />, document.getElementById("root"));
