@@ -350,43 +350,93 @@ import "./index.css";
 
 
 
-// 组件之间相互传值 子向父传值
-class Parents extends React.Component {
-  state = {
-    count: 0
-  };
-  getSonCount = param => {
-    console.log(param);
-    this.setState({
-      count: param
-    });
-  };
-  render() {
-    return (
-      <div className="parents">
-        <div>这是父组件的内容:{this.state.count}</div>
-        <Child myFn={this.getSonCount} />
-      </div>
-    );
-  }
+// // 组件之间相互传值 子向父传值
+// class Parents extends React.Component {
+//   state = {
+//     count: 0
+//   };
+//   getSonCount = param => {
+//     console.log(param);
+//     this.setState({
+//       count: param
+//     });
+//   };
+//   render() {
+//     return (
+//       <div className="parents">
+//         <div>这是父组件的内容:{this.state.count}</div>
+//         <Child myFn={this.getSonCount} />
+//       </div>
+//     );
+//   }
+// }
+// class Child extends React.Component {
+//   state = {
+//     sonCount: 0
+//   };
+//   sonClick = () => {
+//       this.setState({
+//         sonCount:this.state.sonCount+1
+//       })
+//     this.props.myFn(this.state.sonCount)
+//   };
+//   render() {
+//     return (
+//       <div className="son">
+//         <div>这是子组件的内容:{this.state.sonCount}</div>
+//         <button onClick={this.sonClick}>儿子点击+1</button>
+//       </div>
+//     );
+//   }
+// }
+// ReactDOM.render(<Parents />, document.getElementById("root"));
+
+
+
+// 组件之间相互传值 兄弟传值
+class Parents extends React.Component{
+    state={
+        count:0
+    }
+    isChild=(data)=>{
+        this.setState({
+            count:data
+        })
+    }
+    render(){
+        return(
+            <div>
+                <Child1 isCount={this.state.count} />
+                <Child2 getChild={this.isChild}/>
+            </div>
+        )
+    }
 }
-class Child extends React.Component {
-  state = {
-    sonCount: 0
-  };
-  sonClick = () => {
-      this.setState({
-        sonCount:this.state.sonCount+1
-      })
-    this.props.myFn(this.state.sonCount)
-  };
-  render() {
-    return (
-      <div className="son">
-        <div>这是子组件的内容:{this.state.sonCount}</div>
-        <button onClick={this.sonClick}>儿子点击+1</button>
-      </div>
-    );
-  }
+class Child1 extends React.Component{
+    render(){
+        return(
+            <div>
+               <h2>当前的值是:{this.props.isCount}</h2>
+            </div>
+        )
+    }
+}
+class Child2 extends React.Component{
+    state={
+        sonCount:1
+    }
+    isClick=()=>{
+        this.setState({
+            sonCount:this.state.sonCount+1
+        })
+        this.props.getChild(this.state.sonCount)
+    }
+    render(){
+        return(
+            <div>
+                <button onClick={this.isClick}>点击+1</button>
+            </div>
+        )
+    }
 }
 ReactDOM.render(<Parents />, document.getElementById("root"));
