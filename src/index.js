@@ -226,23 +226,103 @@ import './index.css'
 // ReactDOM.render(<Addr />,document.getElementById('root'))
 
 
-// 非受控组件  用得很少
-class Hello extends React.Component{
-    constructor(){
-        super()
-        this.txtRef=React.createRef()
-    }
-    isClick=()=>{
-        console.log('文本框的值是:',this.txtRef.current.value);
+// // 非受控组件  用得很少
+// class Hello extends React.Component{
+//     constructor(){
+//         super()
+//         this.txtRef=React.createRef()
+//     }
+//     isClick=()=>{
+//         console.log('文本框的值是:',this.txtRef.current.value);
         
+//     }
+//     render(){
+//         return (
+//             <div>
+//                 <input type='text' ref={this.txtRef} />
+//                 <button onClick={this.isClick}>点击获取文本框的值</button>
+//             </div>
+//         )
+//     }
+// }
+// ReactDOM.render(<Hello />,document.getElementById('root'))
+
+
+// 评论案例
+class App extends React.Component {
+    state={
+        comments: [
+            { id: 1, name: 'jack', content: '沙发！！！' },
+            { id: 2, name: 'rose', content: '板凳~' },
+            { id: 3, name: 'tom', content: '楼主好人' }
+          ],
+          userName:'',
+          userContent:''
     }
-    render(){
-        return (
-            <div>
-                <input type='text' ref={this.txtRef} />
-                <button onClick={this.isClick}>点击获取文本框的值</button>
-            </div>
+    // 渲染评论列表
+    commentsList=()=>{
+        return(
+            this.state.comments.length===0?(<div className="no-comment">暂无评论，快去评论吧~</div>):(
+                <ul>
+                {this.state.comments.map(item=>(
+                      <li key={item.id}>
+                      <h3>评论人：{item.name}</h3>
+                      <p>评论内容：{item.content}</p>
+                    </li>
+                ))}
+                </ul>
+        )
         )
     }
-}
-ReactDOM.render(<Hello />,document.getElementById('root'))
+    // 当输入框发生改变时
+    isChange=(e)=>{
+        const {name,value}=e.target
+        this.setState({
+            [name]:value
+        })
+    }
+    // 当点击发表评论时
+    isClick=()=>{
+        const {comments,userName,userContent}=this.state
+        if(userName.trim()===''||userContent.trim()===''){
+            alert('列表不能为空!')
+            return
+        }
+        const newComment=[{
+            id:Math.random(),
+            name:userName,
+            content:userContent
+        },...comments]
+        this.setState({
+            comments:newComment,
+            // 评论完成后清空输入框内容
+            userName:'',
+            userContent:''
+        })
+        
+    }
+  render() {
+    return (
+      <div className="app">
+        <div>
+          <input className="user" type="text" value={this.state.userName} name='userName' placeholder="请输入评论人" onChange={this.isChange}/>
+          <br />
+          <textarea
+           value={this.state.userContent}
+           name="userContent"
+           onChange={this.isChange}
+            className="content"
+            cols="30"
+            rows="10"
+            placeholder="请输入评论内容"
+          />
+          <br />
+          <button onClick={this.isClick}>发表评论</button>
+        </div>
+    {this.commentsList()}
+      </div>
+    )}
+  }
+
+// 渲染组件
+ReactDOM.render(<App />, document.getElementById('root'))
