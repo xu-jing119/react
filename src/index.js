@@ -248,81 +248,114 @@ import './index.css'
 // ReactDOM.render(<Hello />,document.getElementById('root'))
 
 
-// 评论案例
-class App extends React.Component {
-    state={
-        comments: [
-            { id: 1, name: 'jack', content: '沙发！！！' },
-            { id: 2, name: 'rose', content: '板凳~' },
-            { id: 3, name: 'tom', content: '楼主好人' }
-          ],
-          userName:'',
-          userContent:''
-    }
-    // 渲染评论列表
-    commentsList=()=>{
-        return(
-            this.state.comments.length===0?(<div className="no-comment">暂无评论，快去评论吧~</div>):(
-                <ul>
-                {this.state.comments.map(item=>(
-                      <li key={item.id}>
-                      <h3>评论人：{item.name}</h3>
-                      <p>评论内容：{item.content}</p>
-                    </li>
-                ))}
-                </ul>
-        )
-        )
-    }
-    // 当输入框发生改变时
-    isChange=(e)=>{
-        const {name,value}=e.target
-        this.setState({
-            [name]:value
-        })
-    }
-    // 当点击发表评论时
-    isClick=()=>{
-        const {comments,userName,userContent}=this.state
-        if(userName.trim()===''||userContent.trim()===''){
-            alert('列表不能为空!')
-            return
-        }
-        const newComment=[{
-            id:Math.random(),
-            name:userName,
-            content:userContent
-        },...comments]
-        this.setState({
-            comments:newComment,
-            // 评论完成后清空输入框内容
-            userName:'',
-            userContent:''
-        })
+// // 评论案例
+// class App extends React.Component {
+//     state={
+//         comments: [
+//             { id: 1, name: 'jack', content: '沙发！！！' },
+//             { id: 2, name: 'rose', content: '板凳~' },
+//             { id: 3, name: 'tom', content: '楼主好人' }
+//           ],
+//           userName:'',
+//           userContent:''
+//     }
+//     // 渲染评论列表
+//     commentsList=()=>{
+//         return(
+//             this.state.comments.length===0?(<div className="no-comment">暂无评论，快去评论吧~</div>):(
+//                 <ul>
+//                 {this.state.comments.map(item=>(
+//                       <li key={item.id}>
+//                       <h3>评论人：{item.name}</h3>
+//                       <p>评论内容：{item.content}</p>
+//                     </li>
+//                 ))}
+//                 </ul>
+//         )
+//         )
+//     }
+//     // 当输入框发生改变时
+//     isChange=(e)=>{
+//         const {name,value}=e.target
+//         this.setState({
+//             [name]:value
+//         })
+//     }
+//     // 当点击发表评论时
+//     isClick=()=>{
+//         const {comments,userName,userContent}=this.state
+//         if(userName.trim()===''||userContent.trim()===''){
+//             alert('列表不能为空!')
+//             return
+//         }
+//         const newComment=[{
+//             id:Math.random(),
+//             name:userName,
+//             content:userContent
+//         },...comments]
+//         this.setState({
+//             comments:newComment,
+//             // 评论完成后清空输入框内容
+//             userName:'',
+//             userContent:''
+//         })
         
-    }
-  render() {
-    return (
-      <div className="app">
-        <div>
-          <input className="user" type="text" value={this.state.userName} name='userName' placeholder="请输入评论人" onChange={this.isChange}/>
-          <br />
-          <textarea
-           value={this.state.userContent}
-           name="userContent"
-           onChange={this.isChange}
-            className="content"
-            cols="30"
-            rows="10"
-            placeholder="请输入评论内容"
-          />
-          <br />
-          <button onClick={this.isClick}>发表评论</button>
-        </div>
-    {this.commentsList()}
-      </div>
-    )}
-  }
+//     }
+//   render() {
+//     return (
+//       <div className="app">
+//         <div>
+//           <input className="user" type="text" value={this.state.userName} name='userName' placeholder="请输入评论人" onChange={this.isChange}/>
+//           <br />
+//           <textarea
+//            value={this.state.userContent}
+//            name="userContent"
+//            onChange={this.isChange}
+//             className="content"
+//             cols="30"
+//             rows="10"
+//             placeholder="请输入评论内容"
+//           />
+//           <br />
+//           <button onClick={this.isClick}>发表评论</button>
+//         </div>
+//     {this.commentsList()}
+//       </div>
+//     )}
+//   }
 
-// 渲染组件
-ReactDOM.render(<App />, document.getElementById('root'))
+// // 渲染组件
+// ReactDOM.render(<App />, document.getElementById('root'))
+
+
+// 组件之间相互传值
+class Parents extends React.Component{
+    state={
+        count:0
+    }
+    parClick=()=>{
+        this.setState({
+            count:this.state.count+1
+        })
+    }
+    render(){
+        return(
+            <div className="parents">
+                <div>这是父组件的内容:{this.state.count}</div>
+                <button onClick={this.parClick}>点击+1</button>
+                <Child countChild={this.state.count} />
+            </div>
+        )
+    }
+}
+class Child extends React.Component{
+    render(){
+        return(
+            <div className="son">
+                <div>这是子组件的内容:{this.props.countChild}</div>
+            </div>
+        )
+    }
+}
+ReactDOM.render(<Parents />,document.getElementById('root'))
+
