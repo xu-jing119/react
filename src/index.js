@@ -442,43 +442,58 @@ import "./index.css";
 // ReactDOM.render(<Parents />, document.getElementById("root"));
 
 
-// context用法  可以拿到多重嵌套的后代中的数据
-const  {Provider,Consumer} = React.createContext()
-class Parents extends React.Component{
+
+// props用法 children属性 子节点中可以放任意类型的数据(文本、react元素、组件、甚至是函数)
+class Hello extends React.Component{
     render(){
-        return (
-            <Provider value="我是父亲的内容">
+        return(
             <div>
-                <Son1 />  
+                {this.props.children}
             </div>
-            </Provider>
         )
     }
 }
-const Son1 = function(){
-    return(
-        <div>
-            <Son2 />
-        </div>
-    )
-}
-const Son2 = function(){
-    return(
-        <div>
-            <Son3 />
-        </div>
-    )
-}
-const Son3 = function(){
-    return(
-        <div>
-           <Consumer>
-               {
-                 data=> <p>data接收到的参数是----{data}</p>
-               }
-           </Consumer>
-        </div>
-    )
-}
 
-ReactDOM.render(<Parents />, document.getElementById("root"));
+ReactDOM.render(<Hello><p>这是子节点的内容</p></Hello>,document.getElementById('root'))
+
+
+// // context用法  可以拿到多重嵌套的后代中的数据
+// const  {Provider,Consumer} = React.createContext()
+// class Parents extends React.Component{
+//     render(){
+//         return (
+//             <Provider value="我是父亲的内容">
+//             <div>
+//                 <Son1 />  
+//             </div>
+//             </Provider>
+//         )
+//     }
+// }
+// const Son1 = function(){
+//     return(
+//         <div>
+//             <Son2 />
+//         </div>
+//     )
+// }
+// const Son2 = function(){
+//     return(
+//         <div>
+//             <Son3 />
+//         </div>
+//     )
+// }
+// const Son3 = function(){
+//     return(
+//         <div>
+//            <Consumer>
+//                {
+//                  data=> <p>data接收到的参数是----{data}</p>
+//                }
+//            </Consumer>
+//         </div>
+//     )
+// }
+
+// ReactDOM.render(<Parents />, document.getElementById("root"));
