@@ -393,50 +393,92 @@ import "./index.css";
 
 
 
-// 组件之间相互传值 兄弟传值
+// // 组件之间相互传值 兄弟传值
+// class Parents extends React.Component{
+//     state={
+//         count:0
+//     }
+//     isChild=(data)=>{
+//         this.setState({
+//             count:data
+//         })
+//     }
+//     render(){
+//         return(
+//             <div>
+//                 <Child1 isCount={this.state.count} />
+//                 <Child2 getChild={this.isChild}/>
+//             </div>
+//         )
+//     }
+// }
+// class Child1 extends React.Component{
+//     render(){
+//         return(
+//             <div>
+//                <h2>当前的值是:{this.props.isCount}</h2>
+//             </div>
+//         )
+//     }
+// }
+// class Child2 extends React.Component{
+//     state={
+//         sonCount:1
+//     }
+//     isClick=()=>{
+//         this.setState({
+//             sonCount:this.state.sonCount+1
+//         })
+//         this.props.getChild(this.state.sonCount)
+//     }
+//     render(){
+//         return(
+//             <div>
+//                 <button onClick={this.isClick}>点击+1</button>
+//             </div>
+//         )
+//     }
+// }
+// ReactDOM.render(<Parents />, document.getElementById("root"));
+
+
+// context用法  可以拿到多重嵌套的后代中的数据
+const  {Provider,Consumer} = React.createContext()
 class Parents extends React.Component{
-    state={
-        count:0
-    }
-    isChild=(data)=>{
-        this.setState({
-            count:data
-        })
-    }
     render(){
-        return(
+        return (
+            <Provider value="我是父亲的内容">
             <div>
-                <Child1 isCount={this.state.count} />
-                <Child2 getChild={this.isChild}/>
+                <Son1 />  
             </div>
+            </Provider>
         )
     }
 }
-class Child1 extends React.Component{
-    render(){
-        return(
-            <div>
-               <h2>当前的值是:{this.props.isCount}</h2>
-            </div>
-        )
-    }
+const Son1 = function(){
+    return(
+        <div>
+            <Son2 />
+        </div>
+    )
 }
-class Child2 extends React.Component{
-    state={
-        sonCount:1
-    }
-    isClick=()=>{
-        this.setState({
-            sonCount:this.state.sonCount+1
-        })
-        this.props.getChild(this.state.sonCount)
-    }
-    render(){
-        return(
-            <div>
-                <button onClick={this.isClick}>点击+1</button>
-            </div>
-        )
-    }
+const Son2 = function(){
+    return(
+        <div>
+            <Son3 />
+        </div>
+    )
 }
+const Son3 = function(){
+    return(
+        <div>
+           <Consumer>
+               {
+                 data=> <p>data接收到的参数是----{data}</p>
+               }
+           </Consumer>
+        </div>
+    )
+}
+
 ReactDOM.render(<Parents />, document.getElementById("root"));
