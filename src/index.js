@@ -541,28 +541,61 @@ import "./index.css";
 
 
 // render props传值
-class Mouse extends React.Component{
+// class Mouse extends React.Component{
+//     state={
+//         x:0,
+//         y:0
+//     }
+//     componentDidMount(){
+//         window.addEventListener('mousemove',(e)=>{
+//             // console.log(e);
+//             this.setState({
+//                 x:e.clientX,
+//                 y:e.clientY
+//             })
+//         })
+//     }
+//     render(){
+//         return this.props.render(this.state)
+//     }
+// }
+// ReactDOM.render(<Mouse render={
+//    mouse=>(
+//        <div>
+//    <p>鼠标的移动距离是x:{mouse.x}----y:{mouse.y}</p>
+// <img src="https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2056256132,304452907&fm=26&gp=0.jpg" style={{position:"absolute",left:mouse.x+'px',top:mouse.y+'px',width:'200px',height:'200px'}} />
+// </div>
+// )}></Mouse>,document.getElementById('root'))
+
+
+
+// children代替render属性
+class App extends React.Component{
+    render(){
+        return(
+        <Child>
+            {(child)=><p>鼠标的位置是x:{child.x}---y:{child.y}</p>}
+        </Child>) 
+    }
+}
+class Child extends React.Component{
     state={
         x:0,
         y:0
     }
     componentDidMount(){
         window.addEventListener('mousemove',(e)=>{
-            // console.log(e);
+            console.log(e);
             this.setState({
-                x:e.clientX,
-                y:e.clientY
+            x:e.clientX,
+            y:e.clientY
             })
+            
         })
     }
     render(){
-        return this.props.render(this.state)
+        return this.props.children(this.state)
     }
 }
-ReactDOM.render(<Mouse render={
-   mouse=>(
-       <div>
-   <p>鼠标的移动距离是x:{mouse.x}----y:{mouse.y}</p>
-<img src="https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2056256132,304452907&fm=26&gp=0.jpg" style={{position:"absolute",left:mouse.x+'px',top:mouse.y+'px',width:'200px',height:'200px'}} />
-</div>
-)}></Mouse>,document.getElementById('root'))
+
+ReactDOM.render(<App />,document.getElementById('root'))
