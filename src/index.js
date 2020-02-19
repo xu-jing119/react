@@ -499,42 +499,70 @@ import "./index.css";
 // ReactDOM.render(<Parents />, document.getElementById("root"));
 
 
-// 生命周期函数
-class Hello extends React.Component{
-    state={
-        count:0
-    }
-    isClick=()=>{
-        this.setState({
-            count:this.state.count+1
-        })
-    }
-    constructor(){
-        super()
-        console.log('创建初始阶段constructor');
+// // 生命周期函数
+// class Hello extends React.Component{
+//     state={
+//         count:0
+//     }
+//     isClick=()=>{
+//         this.setState({
+//             count:this.state.count+1
+//         })
+//     }
+//     constructor(){
+//         super()
+//         console.log('创建初始阶段constructor');
         
-    }
+//     }
    
-    render(){
-        console.log('渲染阶段render');
-        return(
-            <div>
-                <h2>点击加:{this.state.count}</h2>
-                <button onClick={this.isClick}>点击</button>
-            </div>
-        )
+//     render(){
+//         console.log('渲染阶段render');
+//         return(
+//             <div>
+//                 <h2>点击加:{this.state.count}</h2>
+//                 <button onClick={this.isClick}>点击</button>
+//             </div>
+//         )
+//     }
+//     componentDidMount(){
+//         console.log('创建完成阶段componentDidMount    发送请求及dom操作可以放这个里面');
+        
+//     }
+//     componentDidUpdate(){
+//         console.log('数据更新是触发componentDidUpdate');
+        
+//     }
+//     componentWillUnmount(){
+//         console.log('组件销毁时触发componentWillUnmount');
+        
+//     }
+// }
+// ReactDOM.render(<Hello />,document.getElementById('root'))
+
+
+// render props传值
+class Mouse extends React.Component{
+    state={
+        x:0,
+        y:0
     }
     componentDidMount(){
-        console.log('创建完成阶段componentDidMount    发送请求及dom操作可以放这个里面');
-        
+        window.addEventListener('mousemove',(e)=>{
+            // console.log(e);
+            this.setState({
+                x:e.clientX,
+                y:e.clientY
+            })
+        })
     }
-    componentDidUpdate(){
-        console.log('数据更新是触发componentDidUpdate');
-        
-    }
-    componentWillUnmount(){
-        console.log('组件销毁时触发componentWillUnmount');
-        
+    render(){
+        return this.props.render(this.state)
     }
 }
-ReactDOM.render(<Hello />,document.getElementById('root'))
+ReactDOM.render(<Mouse render={
+   mouse=>(
+       <div>
+   <p>鼠标的移动距离是x:{mouse.x}----y:{mouse.y}</p>
+<img src="https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2056256132,304452907&fm=26&gp=0.jpg" style={{position:"absolute",left:mouse.x+'px',top:mouse.y+'px',width:'200px',height:'200px'}} />
+</div>
+)}></Mouse>,document.getElementById('root'))
