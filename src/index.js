@@ -443,18 +443,18 @@ import "./index.css";
 
 
 
-// props用法 children属性 子节点中可以放任意类型的数据(文本、react元素、组件、甚至是函数)
-class Hello extends React.Component{
-    render(){
-        return(
-            <div>
-                {this.props.children}
-            </div>
-        )
-    }
-}
+// // props用法 children属性 子节点中可以放任意类型的数据(文本、react元素、组件、甚至是函数)
+// class Hello extends React.Component{
+//     render(){
+//         return(
+//             <div>
+//                 {this.props.children}
+//             </div>
+//         )
+//     }
+// }
 
-ReactDOM.render(<Hello><p>这是子节点的内容</p></Hello>,document.getElementById('root'))
+// ReactDOM.render(<Hello><p>这是子节点的内容</p></Hello>,document.getElementById('root'))
 
 
 // // context用法  可以拿到多重嵌套的后代中的数据
@@ -497,3 +497,44 @@ ReactDOM.render(<Hello><p>这是子节点的内容</p></Hello>,document.getEleme
 // }
 
 // ReactDOM.render(<Parents />, document.getElementById("root"));
+
+
+// 生命周期函数
+class Hello extends React.Component{
+    state={
+        count:0
+    }
+    isClick=()=>{
+        this.setState({
+            count:this.state.count+1
+        })
+    }
+    constructor(){
+        super()
+        console.log('创建初始阶段constructor');
+        
+    }
+   
+    render(){
+        console.log('渲染阶段render');
+        return(
+            <div>
+                <h2>点击加:{this.state.count}</h2>
+                <button onClick={this.isClick}>点击</button>
+            </div>
+        )
+    }
+    componentDidMount(){
+        console.log('创建完成阶段componentDidMount    发送请求及dom操作可以放这个里面');
+        
+    }
+    componentDidUpdate(){
+        console.log('数据更新是触发componentDidUpdate');
+        
+    }
+    componentWillUnmount(){
+        console.log('组件销毁时触发componentWillUnmount');
+        
+    }
+}
+ReactDOM.render(<Hello />,document.getElementById('root'))
